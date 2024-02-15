@@ -4,9 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 const App = () => {
 	return (
 		<View style={styles.container}>
-			<Text>
-				Open up App.tsx to start working2222333333332222222222 on your app!
-			</Text>
+			<Text>ACA TRARER "NAVIGATION" Y ENCERRAR LOS PROVIDERS</Text>
 			<StatusBar style="auto" />
 		</View>
 	);
