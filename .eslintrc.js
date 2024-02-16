@@ -27,5 +27,7 @@ module.exports = {
 	plugins: ['react'],
 	rules: {
 		'@typescript-eslint/explicit-function-return-type': 'off',
+		'@typescript-eslint/consistent-type-imports': 'off',
+		'@typescript-eslint/consistent-type-exports': 'off',
 	},
 };
