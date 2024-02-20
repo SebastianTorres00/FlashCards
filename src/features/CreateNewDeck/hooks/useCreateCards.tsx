@@ -1,11 +1,15 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { listCards } from '../../../store/listSlice/homeSlice';
 
 const useCreateCards = () => {
+	const dispatch = useDispatch();
+	const state = useSelector((state) => state);
 	const [titleCard, setTitleCard] = useState('');
 	const [step, setStep] = useState('1');
 	const [listTextInput, setListTextInput] = useState([{ textInputID: '1' }]);
 	const [cardDetails, setCardDetails] = useState({
-		title: { 0: '' },
+		title: {},
 		response: '',
 	});
 	const [showModal, setShowModal] = useState(false);
@@ -36,12 +40,16 @@ const useCreateCards = () => {
 	};
 
 	const onSubmitCard = () => {
-		console.log('LOG :: >>>');
+		dispatch(listCards(cardDetails));
 	};
 
 	const onShowModal = () => {
 		setShowModal(!showModal);
 	};
+
+	useEffect(() => {
+		console.log('STATE ====>', state);
+	}, [state]);
 
 	return {
 		titleCard,
@@ -54,6 +62,7 @@ const useCreateCards = () => {
 		onSubmitCard,
 		onChangeTitle,
 		onShowModal,
+		showModal,
 	};
 };
 

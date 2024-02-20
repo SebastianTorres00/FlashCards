@@ -16,6 +16,7 @@ const CreateDeckScreen = () => {
 		onSubmitCard,
 		onChangeTitle,
 		onShowModal,
+		showModal,
 	} = useCreateCards();
 	const navigation = useNavigation();
 	return (
@@ -42,6 +43,7 @@ const CreateDeckScreen = () => {
 								onSubmitCard={onSubmitCard}
 								onChangeTitle={onChangeTitle}
 								onShowModal={onShowModal}
+								showModal={showModal}
 							/>
 						);
 				}

@@ -14,6 +14,7 @@ const CreateDeckSecondStep = ({
 	onSubmitCard,
 	onChangeTitle,
 	onShowModal,
+	showModal,
 }) => {
 	const textGoBack = '<-------';
 
@@ -61,38 +62,40 @@ const CreateDeckSecondStep = ({
 			/>
 
 			<TouchableOpacity
-				onPress={onSubmitCard}
+				onPress={onShowModal}
 				style={{ backgroundColor: '#3333', top: '15%' }}
 			>
 				<Text style={{ fontSize: 20, textAlign: 'center' }}>Nombre BTN</Text>
 			</TouchableOpacity>
-			<View
-				style={{
-					display: 'flex',
-					justifyContent: 'center',
-					alignItems: 'center',
-					borderColor: '#000',
-					borderWidth: 1,
-					borderRadius: 12,
-					padding: 8,
-					height: '40%',
-					width: '80%',
-					position: 'absolute',
-					backgroundColor: '#444',
-				}}
-			>
-				<TouchableOpacity
-					style={{ backgroundColor: '#333', padding: 5, margin: 5 }}
+			{showModal && (
+				<View
+					style={{
+						display: 'flex',
+						justifyContent: 'center',
+						alignItems: 'center',
+						borderColor: '#000',
+						borderWidth: 1,
+						borderRadius: 12,
+						padding: 8,
+						height: '40%',
+						width: '80%',
+						position: 'absolute',
+						backgroundColor: '#444',
+					}}
 				>
-					<Text style={{ textAlign: 'center' }}>Crear nueva Card</Text>
-				</TouchableOpacity>
-				<TouchableOpacity
-					style={{ backgroundColor: '#3333', padding: 5 }}
-					onPress={onShowModal}
-				>
-					<Text>Finalizar</Text>
-				</TouchableOpacity>
-			</View>
+					<TouchableOpacity
+						style={{ backgroundColor: '#333', padding: 5, margin: 5 }}
+					>
+						<Text style={{ textAlign: 'center' }}>Crear nueva Card</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={{ backgroundColor: '#3333', padding: 5 }}
+						onPress={onSubmitCard}
+					>
+						<Text>Finalizar</Text>
+					</TouchableOpacity>
+				</View>
+			)}
 		</View>
 	);
 };
