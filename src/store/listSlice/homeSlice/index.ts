@@ -1,48 +1,54 @@
 import { createSlice } from '@reduxjs/toolkit';
+import { adapterCardCreate } from '../../../features/CreateNewDeck/utils';
 
-interface IDetailsCards {
+export interface IDetailsCards {
 	title: object;
 	response: string;
 }
 
-export interface CardsState {
+interface ICardAction {
+	cardDetails: IDetailsCards;
+	titleCardSelected: string;
+	cardsStore: any; // cualquier array
+}
+
+interface IintialStateCardsState {
 	cards: IDetailsCards[];
+	cardSelectedTitle: string;
 }
 
 interface IActionListCard {
-	payload: IDetailsCards;
+	payload: ICardAction;
+}
+interface IActionSetTitleCard {
+	payload: string;
 }
 
-const initialState: CardsState = {
+const initialState: IintialStateCardsState = {
 	cards: [],
+	cardSelectedTitle: '',
 };
-
-/*
-
-	cards :[
-		ingles: [
-			{
-				title: {0: "title"},
-				response: "details response"
-			}
-		]
-	]
-
-*/
 
 export const homeSlice = createSlice({
 	name: 'counter',
 	initialState,
 	reducers: {
-		listCards: (state: CardsState, action: IActionListCard) => {
-			console.log('listCards :::: state', state);
-			console.log('listCards :::: action', action);
-			state.cards.push(action?.payload);
+		listCards: (state: IintialStateCardsState, action: IActionListCard) => {
+			const listCardsAdapter = adapterCardCreate(action.payload);
+			console.log('listCardsAdapter', listCardsAdapter);
+
+			state.cards = [listCardsAdapter];
+		},
+		setTitleCardSelected: (
+			state: IintialStateCardsState,
+			action: IActionSetTitleCard,
+		) => {
+			state.cardSelectedTitle = action.payload;
 		},
 	},
 });
 
 // Action creators are generated for each case reducer function
-export const { listCards } = homeSlice.actions;
+export const { listCards, setTitleCardSelected } = homeSlice.actions;
 
 export default homeSlice.reducer;
