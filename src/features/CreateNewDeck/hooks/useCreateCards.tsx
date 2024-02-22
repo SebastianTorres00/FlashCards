@@ -1,10 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { listCards } from '../../../store/listSlice/homeSlice';
+import {
+	listCards,
+	setTitleCardSelected,
+} from '../../../store/listSlice/homeSlice';
 
 const useCreateCards = () => {
 	const dispatch = useDispatch();
-	const state = useSelector((state) => state);
+	const listCardsStore = useSelector((state) => state.listCard.cards);
+	const storeState = useSelector((state) => state.listCard);
 	const [titleCard, setTitleCard] = useState('');
 	const [step, setStep] = useState('1');
 	const [listTextInput, setListTextInput] = useState([{ textInputID: '1' }]);
@@ -15,6 +19,7 @@ const useCreateCards = () => {
 	const [showModal, setShowModal] = useState(false);
 	const onChangeSteps = () => {
 		if (step === '1') {
+			dispatch(setTitleCardSelected(titleCard));
 			setStep('2');
 			return;
 		}
@@ -40,7 +45,15 @@ const useCreateCards = () => {
 	};
 
 	const onSubmitCard = () => {
-		dispatch(listCards(cardDetails));
+		const listCreateCard = {
+			cardsStore: listCardsStore,
+			cardDetails,
+			titleCardSelected: titleCard,
+		};
+		// titleCardSelected: titleCard
+		console.log('LOG :: -listCardsStore-->', listCreateCard);
+
+		dispatch(listCards(listCreateCard));
 	};
 
 	const onShowModal = () => {
@@ -48,8 +61,13 @@ const useCreateCards = () => {
 	};
 
 	useEffect(() => {
-		console.log('STATE ====>', state);
-	}, [state]);
+		console.log('Store-->listCreateCard ====>', storeState);
+		if (storeState?.cards) {
+			storeState?.cards?.map((item) => {
+				console.log('TEST item useEEFECt', item);
+			});
+		}
+	}, [storeState]);
 
 	return {
 		titleCard,
