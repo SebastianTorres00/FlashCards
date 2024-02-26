@@ -6,25 +6,63 @@ interface ICardProps {
 	cardsStore: any; // cualquier array
 }
 
+const createDeck = (titleCardSelected: string, cardDetails: IDetailsCards) => {
+	const listCard = [];
+	listCard[titleCardSelected] = [];
+
+	listCard[titleCardSelected].push(cardDetails);
+
+	return listCard;
+};
+
 const adapterCardCreate = (value: ICardProps) => {
 	const { titleCardSelected, cardDetails, cardsStore } = value;
 	console.log('-----> VALUE ---->', value);
-	let listCard = [];
+	let isCardCreated = false;
+
+	cardsStore.forEach((item: object) => {
+		console.log('item ', item);
+		console.log(
+			'Object.keys(item).includes(titleCardSelected) ',
+			Object.keys(item).includes(titleCardSelected),
+		);
+		isCardCreated = Object.keys(item).includes(titleCardSelected);
+	});
+	console.log('----------->', isCardCreated);
 
 	if (!cardsStore.length) {
-		listCard[titleCardSelected] = [];
-
-		listCard[titleCardSelected].push(cardDetails);
-
-		return listCard;
+		return createDeck(titleCardSelected, cardDetails);
 	}
+	console.log(
+		'cardsStore.length && !isCardCreated',
+		cardsStore.length && !isCardCreated,
+	);
+	console.log(
+		'cardsStore.length , !isCardCreated',
+		cardsStore.length,
+		!isCardCreated,
+	);
 
-	const isCardCreated: boolean = cardsStore.map((item: object) => {
-		const listNameKeys = Object.keys(item).includes(titleCardSelected);
-		return listNameKeys;
-	});
+	if (cardsStore.length && !isCardCreated) {
+		// ya hay mas de un mazo y no existe esa card
+		const newDeckCreated = createDeck(titleCardSelected, cardDetails); // Solo retonra el arr con una sola posicion
+		console.log('-----> cardsStore', cardsStore);
+		console.log(
+			'newDeckCreated[titleCardSelected]',
+			newDeckCreated[titleCardSelected],
+		);
 
-	console.log('----- isCardCreated --->', isCardCreated);
+		debugger;
+		const newDeck = { ...cardsStore, ...newDeckCreated[titleCardSelected] };
+		console.log('-----> newDeck', newDeck);
+		debugger;
+		console.log(
+			'LOG:: newDeckCreated[titleCardSelected]',
+			newDeckCreated[titleCardSelected],
+		);
+		console.log('LOG:: ===xxxxxxxxxxxxxxxxxx=====');
+		return newDeck;
+	}
 
 	if (isCardCreated) {
 		let cardSelected = {};
@@ -41,6 +79,7 @@ const adapterCardCreate = (value: ICardProps) => {
 			}
 		});
 		console.log('cardSelected----->', cardSelected);
+		return cardSelected;
 	}
 };
 
