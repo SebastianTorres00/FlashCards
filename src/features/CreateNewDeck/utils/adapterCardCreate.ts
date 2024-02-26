@@ -8,46 +8,37 @@ interface ICardProps {
 
 const adapterCardCreate = (value: ICardProps) => {
 	const { titleCardSelected, cardDetails, cardsStore } = value;
-	console.log('-----> value', value);
-
-	const listCard = {};
+	console.log('-----> VALUE ---->', value);
+	let listCard = [];
 
 	if (!cardsStore.length) {
-		Object.defineProperty(listCard, titleCardSelected, {
-			value: [],
-			writable: true,
-			enumerable: true,
-		});
-
-		console.log('cardDetails --->', cardDetails);
+		listCard[titleCardSelected] = [];
 
 		listCard[titleCardSelected].push(cardDetails);
 
-		console.log('listCard --->', listCard);
 		return listCard;
 	}
+
 	const isCardCreated: boolean = cardsStore.map((item: object) => {
 		const listNameKeys = Object.keys(item).includes(titleCardSelected);
 		return listNameKeys;
 	});
 
-	if (isCardCreated) {
-		console.log('-----cardsStore', cardsStore);
+	console.log('----- isCardCreated --->', isCardCreated);
 
-		const listCard = cardsStore.filter((item: object) => {
-			if (Object.keys(item).includes(titleCardSelected)) {
-				return item;
+	if (isCardCreated) {
+		let cardSelected = {};
+
+		cardsStore.forEach((data: string) => {
+			if (Object.keys(data).includes(titleCardSelected)) {
+				const dataAdapter = {
+					[titleCardSelected]: [...data[titleCardSelected]],
+				};
+
+				console.log('dataaaaaaaaa ----> ', dataAdapter);
+				dataAdapter[titleCardSelected].push(cardDetails);
+				cardSelected = dataAdapter;
 			}
-			return {};
-		});
-		console.log('listCard----->', listCard);
-		let cardSelected;
-		cardsStore.forEach((item: object) => {
-			if (Object.keys(item).includes(titleCardSelected)) {
-				cardSelected = item;
-				return;
-			}
-			return {};
 		});
 		console.log('cardSelected----->', cardSelected);
 	}
@@ -63,7 +54,7 @@ const listCards = {
         {
           title: {0: "tilteV1"},
           response: "detail response"
-        },
+        },|
       ],
       test: [
         {
