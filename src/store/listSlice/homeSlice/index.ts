@@ -35,7 +35,7 @@ export const homeSlice = createSlice({
 	reducers: {
 		listCards: (state: IintialStateCardsState, action: IActionListCard) => {
 			const listCardsAdapter = adapterCardCreate(action.payload);
-			console.log('listCardsAdapter', listCardsAdapter);
+			console.log('***listCardsAdapter***', [listCardsAdapter]);
 
 			state.cards = [listCardsAdapter];
 		},
