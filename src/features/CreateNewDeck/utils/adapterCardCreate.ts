@@ -34,10 +34,11 @@ const adapterCardCreate = (value: ICardProps) => {
 	if (cardsStore.length && !isCardCreated) {
 		// ya hay mas de un mazo y no existe esa card
 		const newDeckCreated = createDeck(titleCardSelected, cardDetails); // Solo retonra el arr con una sola posicion
-		console.log('-----> newDeckCreated', newDeckCreated);
-		// const newDeck = { ...cardsStore, ...newDeckCreated[titleCardSelected] };
+		console.log(
+			'-----> nuevaCardCreada -------> newDeckCreated',
+			newDeckCreated,
+		);
 
-		// console.log('LOG:: ===xxxxxxxxxxxxxxxxxx=====newDeck', newDeck);
 		/*	
 			debe entregar un objeto con dos objetos
 			let test = {
@@ -47,11 +48,18 @@ const adapterCardCreate = (value: ICardProps) => {
 				]
 			} 
 		*/
+
 		const testV1 = [...cardsStore];
 		console.log('LOG:: --------> testV1 ---->', testV1);
-		console.log('LOG:: --------> cardsStore ---->', cardsStore);
-		console.log('LOG:: ===xxxxxxxxxxxxxxxxxx=====newDeck', [cardsStore]);
-		const testv2 = { ...newDeckCreated[0], adapterList };
+		console.log('LOG:: --------> adapterList ---->', adapterList);
+		console.log(
+			'LOG:: --------> newDeckCreated[titleCardSelected] ---->',
+			newDeckCreated[titleCardSelected],
+		);
+		const test = newDeckCreated[titleCardSelected];
+		console.log('LOG :: ---> test', test);
+
+		const testv2 = { test, ...adapterList };
 		console.log('LOG --------> testv2', testv2);
 		return { ...newDeckCreated[0], adapterList };
 	}
