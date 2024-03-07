@@ -17,13 +17,12 @@ const createDeck = (titleCardSelected: string, cardDetails: IDetailsCards) => {
 
 const adapterCardCreate = (value: ICardProps) => {
 	const { titleCardSelected, cardDetails, cardsStore } = value;
-	const adapterList = cardsStore[0];
-	console.log('-----> VA1LUE ---->', value);
-	let isCardCreated: boolean = false;
-	// Object.keys(cardsStore).includes(titleCardSelected);
+	console.log('LOG ----> cardsStore', cardsStore);
+	console.log('LOG ----> value', value);
 
+	let adapterList = cardsStore[0];
+	let isCardCreated: boolean = false;
 	cardsStore.forEach((item: object) => {
-		console.log('INGLES item--->', item);
 		isCardCreated = Object.keys(item).includes(titleCardSelected);
 	});
 	console.log('-----isCardCreated------>', isCardCreated);
@@ -34,11 +33,6 @@ const adapterCardCreate = (value: ICardProps) => {
 	if (cardsStore.length && !isCardCreated) {
 		// ya hay mas de un mazo y no existe esa card
 		const newDeckCreated = createDeck(titleCardSelected, cardDetails); // Solo retonra el arr con una sola posicion
-		console.log(
-			'-----> nuevaCardCreada -------> newDeckCreated',
-			newDeckCreated,
-		);
-
 		/*	
 			debe entregar un objeto con dos objetos
 			let test = {
@@ -48,20 +42,11 @@ const adapterCardCreate = (value: ICardProps) => {
 				]
 			} 
 		*/
-
-		const testV1 = [...cardsStore];
-		console.log('LOG:: --------> testV1 ---->', testV1);
-		console.log('LOG:: --------> adapterList ---->', adapterList);
-		console.log(
-			'LOG:: --------> newDeckCreated[titleCardSelected] ---->',
-			newDeckCreated[titleCardSelected],
-		);
-		const test = newDeckCreated[titleCardSelected];
-		console.log('LOG :: ---> test', test);
-
-		const testv2 = { test, ...adapterList };
-		console.log('LOG --------> testv2', testv2);
-		return { ...newDeckCreated[0], adapterList };
+		const testv12 = { ...newDeckCreated };
+		return {
+			...testv12,
+			...adapterList,
+		};
 	}
 
 	if (isCardCreated) {
@@ -70,13 +55,12 @@ const adapterCardCreate = (value: ICardProps) => {
 
 		cardsStore.forEach((data: string) => {
 			console.log('LOG ---> data For each', data);
-
+			console.log('LOG ---> data.length', data.length);
+			cardsNumers = data.length;
 			if (Object.keys(data).includes(titleCardSelected)) {
 				const dataAdapter = {
 					[titleCardSelected]: [...data[titleCardSelected]],
 				};
-
-				// console.log('dataaaaaaaaa ----> ', dataAdapter);
 				dataAdapter[titleCardSelected].push(cardDetails);
 				cardSelected = dataAdapter;
 			}
@@ -84,10 +68,58 @@ const adapterCardCreate = (value: ICardProps) => {
 		/*
 			let test = {ingles:[{},{}]}
 		*/
-		console.log(
-			'<--------------cardSelected11111111111111111111111111cardSelected----->',
-			cardSelected,
-		);
+		console.log('LOG :: -----> cardSelected', cardSelected);
+
+		console.log('LOG :: -----> adapterList', adapterList);
+
+		const keys = [];
+		for (let key in adapterList) {
+			keys.push(key);
+		}
+		let cardsNumers = keys.length;
+
+		if (cardsNumers >= 1) {
+			// const cardRes = cardsStore.map((data: string) => {
+			// 	console.log('LOG :: ---> data', data);
+
+			// 	if (data) {
+			// 		console.log('------> item data cardStore LOG cardsNum', data);
+			// 		console.log(
+			// 			'Object.keys(data).includes(titleCardSelected)',
+			// 			Object.keys(data).includes(titleCardSelected),
+			// 		);
+			// 		return data;
+			// 	}
+			// });
+
+			const listCards = [];
+			for (const property in adapterList) {
+				// console.log(`${property}: ${adapterList[property]}`);
+				// console.log('----> property', property);
+				// console.log('----> adapterList[property]', adapterList[property]);
+				if (property !== titleCardSelected) {
+					listCards.push({ [property]: adapterList[property] });
+				}
+			}
+			console.log('LOG :: -----> listCards', listCards);
+
+			adapterList = { ...cardSelected };
+			console.log('-------> cardRes', adapterList);
+			console.log(
+				'-------> adapterList[titleCardSelected]',
+				adapterList[titleCardSelected],
+			);
+			const cardAdapt = listCards[0];
+			console.log('{ ...cardSelected, ...cardAdapt }', {
+				...cardSelected,
+				...cardAdapt,
+			});
+
+			return {
+				...cardSelected,
+				...cardAdapt,
+			};
+		}
 		return cardSelected;
 	}
 };
