@@ -4,11 +4,15 @@ import { Home } from '../components/';
 import useHome from '../hooks/useHome';
 
 const HomeScreen = () => {
-	const { cards, onPressBtn } = useHome();
+	const { cardsList, onPressBtn, lengthCards } = useHome();
 
 	return (
 		<View style={styles.container}>
-			<Home cards={cards} onPressBtn={onPressBtn} />
+			<Home
+				cardsList={cardsList}
+				onPressBtn={onPressBtn}
+				lengthCards={lengthCards}
+			/>
 			<StatusBar style="auto" />
 		</View>
 	);
