@@ -25,7 +25,6 @@ const adapterCardCreate = (value: ICardProps) => {
 	cardsStore.forEach((item: object) => {
 		isCardCreated = Object.keys(item).includes(titleCardSelected);
 	});
-	// console.log('-----isCardCreated------>', isCardCreated);
 
 	if (!cardsStore.length) {
 		return createDeck(titleCardSelected, cardDetails);
@@ -46,8 +45,6 @@ const adapterCardCreate = (value: ICardProps) => {
 		let cardSelected = {};
 
 		cardsStore.forEach((data: string) => {
-			// console.log('LOG ---> data For each', data);
-			// console.log('LOG ---> data.length', data.length);
 			cardsNumers = data.length;
 			if (Object.keys(data).includes(titleCardSelected)) {
 				const dataAdapter = {
