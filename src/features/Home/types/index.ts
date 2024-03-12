@@ -1,6 +1,7 @@
 interface IPropsUseHome {
-	cards: any[];
+	cardsList: any[];
 	onPressBtn: () => void;
+	lengthCards: number;
 }
 
 export { IPropsUseHome };
