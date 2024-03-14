@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import { IStateListCard } from '../../../types';
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 
@@ -22,7 +21,22 @@ const useHome = () => {
 	const onPressBtn = () => {
 		navigation.navigate('CreateDeck');
 	};
-	return { cardsList, onPressBtn, lengthCards };
+
+	const onPressNavigateCardSelected = (itemValue: any) => {
+		// console.log(
+		// 	'LOG -----> onPressNavigateCardSelected ---> itemValue',
+		// 	itemValue,
+		// 	'-------> Object.keys',
+		// 	Object.keys(itemValue)[0],
+		// );
+		const CardSelected = {
+			title: Object.keys(itemValue)[0],
+			...itemValue,
+		};
+		navigation.navigate('CategorySelected', { CardSelected });
+	};
+
+	return { cardsList, onPressBtn, lengthCards, onPressNavigateCardSelected };
 };
 
 export default useHome;

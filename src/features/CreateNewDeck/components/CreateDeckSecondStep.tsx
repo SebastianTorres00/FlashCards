@@ -4,6 +4,19 @@ import createDeckStyle from './createDeckStyle';
 interface ItextInputID {
 	textInputID: string;
 }
+interface IPropsSecondStep {
+	onChangeSteps: () => void;
+	titleCard: string;
+	listTextInput: any[];
+	createMoreInputs: () => void;
+	onChangeResponse: () => void;
+	onSubmitCard: () => void;
+	onChangeTitle: () => void;
+	onShowModal: () => void;
+	showModal: boolean;
+	nextCard: () => void;
+	cardDetails: string;
+}
 
 const CreateDeckSecondStep = ({
 	onChangeSteps,
@@ -15,8 +28,15 @@ const CreateDeckSecondStep = ({
 	onChangeTitle,
 	onShowModal,
 	showModal,
-}) => {
+	nextCard,
+	cardDetails,
+}: IPropsSecondStep) => {
 	const textGoBack = '<-------';
+	// console.log('LOG .------> TEST .---->cardDetails.title ', cardDetails?.title);
+	// console.log(
+	// 	'LOG .------> TEST .---->cardDetails.response ',
+	// 	cardDetails?.response,
+	// );
 
 	return (
 		<View style={createDeckStyle.container}>
@@ -33,7 +53,7 @@ const CreateDeckSecondStep = ({
 
 			<Text style={{ fontSize: 40, textAlign: 'center' }}>{titleCard}</Text>
 			<Text style={{ fontSize: 30 }}>(!)</Text>
-			{listTextInput?.map(({ textInputID }: ItextInputID) => (
+			{/* {listTextInput?.map(({ textInputID }: ItextInputID) => (
 				<TextInput
 					key={textInputID}
 					style={{
@@ -44,8 +64,20 @@ const CreateDeckSecondStep = ({
 					}}
 					onChangeText={onChangeTitle}
 					placeholder="Pregunta Frontal"
+					value={cardDetailsTitle}
 				/>
-			))}
+			))} */}
+			<TextInput
+				style={{
+					borderColor: '#000',
+					borderWidth: 1,
+					borderRadius: 12,
+					padding: 8,
+				}}
+				onChangeText={onChangeTitle}
+				placeholder="Pregunta Frontal"
+				value={cardDetails?.title}
+			/>
 			<TouchableOpacity onPress={createMoreInputs}>
 				<Text style={{ fontSize: 30 }}>+</Text>
 			</TouchableOpacity>
@@ -59,6 +91,7 @@ const CreateDeckSecondStep = ({
 				}}
 				onChangeText={onChangeResponse}
 				placeholder="Tu texto"
+				value={cardDetails?.response}
 			/>
 
 			<TouchableOpacity
@@ -85,6 +118,7 @@ const CreateDeckSecondStep = ({
 				>
 					<TouchableOpacity
 						style={{ backgroundColor: '#333', padding: 5, margin: 5 }}
+						onPress={nextCard}
 					>
 						<Text style={{ textAlign: 'center' }}>Crear nueva Card</Text>
 					</TouchableOpacity>

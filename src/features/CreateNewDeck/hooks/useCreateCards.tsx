@@ -4,19 +4,30 @@ import {
 	listCards,
 	setTitleCardSelected,
 } from '../../../store/listSlice/homeSlice';
+import { useNavigation } from '@react-navigation/native';
+import { useToast } from 'react-native-paper-toast';
 
 const useCreateCards = () => {
 	const dispatch = useDispatch();
 	const listCardsStore = useSelector((state) => state.listCard.cards);
 	const storeState = useSelector((state) => state.listCard);
+	const navigation = useNavigation();
 	const [titleCard, setTitleCard] = useState('');
 	const [step, setStep] = useState('1');
 	const [listTextInput, setListTextInput] = useState([{ textInputID: '1' }]);
 	const [cardDetails, setCardDetails] = useState({
-		title: {},
+		title: '',
 		response: '',
 	});
 	const [showModal, setShowModal] = useState(false);
+	const toaster = useToast();
+	const handleCorrect = () =>
+		toaster.show({
+			message: 'Crard creada correctamente',
+			type: 'success',
+			position: 'top',
+		});
+
 	const onChangeSteps = () => {
 		if (step === '1') {
 			dispatch(setTitleCardSelected(titleCard));
@@ -41,7 +52,7 @@ const useCreateCards = () => {
 		setCardDetails({ ...cardDetails, response: value });
 	};
 	const onChangeTitle = (value: string) => {
-		setCardDetails({ ...cardDetails, title: { 0: value } });
+		setCardDetails({ ...cardDetails, title: value });
 	};
 
 	const onSubmitCard = () => {
@@ -50,10 +61,23 @@ const useCreateCards = () => {
 			cardDetails,
 			titleCardSelected: titleCard,
 		};
-		// titleCardSelected: titleCard
-		console.log('LOG :: -listCardsStore-->', listCreateCard);
-
 		dispatch(listCards(listCreateCard));
+		handleCorrect();
+		navigation.navigate('Home');
+	};
+	const nextCard = () => {
+		const listCreateCard = {
+			cardsStore: listCardsStore,
+			cardDetails,
+			titleCardSelected: titleCard,
+		};
+		dispatch(listCards(listCreateCard));
+		setCardDetails({
+			title: '',
+			response: '',
+		});
+		handleCorrect();
+		setShowModal(!showModal);
 	};
 
 	const onShowModal = () => {
@@ -68,6 +92,7 @@ const useCreateCards = () => {
 			});
 		}
 	}, [storeState]);
+	// console.log('LOG ----> cardDetails', cardDetails);
 
 	return {
 		titleCard,
@@ -81,6 +106,8 @@ const useCreateCards = () => {
 		onChangeTitle,
 		onShowModal,
 		showModal,
+		nextCard,
+		cardDetails,
 	};
 };
 

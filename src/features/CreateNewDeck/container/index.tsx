@@ -17,7 +17,10 @@ const CreateDeckScreen = () => {
 		onChangeTitle,
 		onShowModal,
 		showModal,
+		nextCard,
+		cardDetails,
 	} = useCreateCards();
+
 	const navigation = useNavigation();
 	return (
 		<View style={styles.container}>
@@ -44,6 +47,8 @@ const CreateDeckScreen = () => {
 								onChangeTitle={onChangeTitle}
 								onShowModal={onShowModal}
 								showModal={showModal}
+								nextCard={nextCard}
+								cardDetails={cardDetails}
 							/>
 						);
 				}
